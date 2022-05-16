@@ -2,11 +2,17 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const db = require('./db');
 
 app.use(express.json())
 
 //Get all users
-app.get('/api/v1/users', (req, res) => {
+app.get('/api/v1/users', async (req, res) => {
+
+    const result = await db.query('SELECT * FROM users');
+
+    console.log(result);
+
     res.status(200).json({
         status: 'success',
         data: {

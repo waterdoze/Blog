@@ -9,57 +9,94 @@ app.use(express.json())
 //Get all users
 app.get('/api/v1/users', async (req, res) => {
 
-    const result = await db.query('SELECT * FROM users');
+    try {
+        const result = await db.query('SELECT * FROM users');
 
-    console.log(result);
-
-    res.status(200).json({
-        status: 'success',
-        data: {
-            users: ['adonk', 'kev']
-        }
-    });
+        res.status(200).json({
+            status: 'success',
+            results: result.rows.length,
+            data: {
+                users: result.rows
+            }
+        });
+    }
+    catch(err) {
+        console.log(err);
+    }
+    
 });
 
 //Get a single user
-app.get('/api/v1/users/:id', (req, res) => {
-    console.log(req.params);
-    res.status(200).json({
-        status: 'success',
-        data: {
-            user: 'adonk'
-        }
-    })
+app.get('/api/v1/users/:id', async (req, res) => {
+
+    const id = req.params.id;
+
+    try {
+
+        const result = await db.query('SELECT * FROM users WHERE id = $1', [id]);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                user: result.rows
+            }
+        })
+    }
+    catch (err) {
+        console.log(err);
+    }
+    
 });
 
 //Create user
 app.post('/api/v1/users', (req, res) => {
-    console.log(req.body);
-    res.status(201).json({
-        status: 'success',
-        data: {
-            user: 'adonk'
-        }
-    });
+    try {
+
+        const result = db.query(
+            'INSERT INTO users (name, cake_day, karma, country) values ($1, $2, $3, $4)',
+             [req.body.name, req.body.cake_day, req.body.karma, req.body.country]
+        );
+        
+        res.status(201).json({
+            status: 'success',
+            data: {
+                user: 'adonk'
+            }
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 });
 
 //Update user
 app.put('/api/v1/users/:id', (req, res) => {
-    console.log(req.params.id);
-    console.log(req.body);
-    res.status(200).json({
-        status: 'success',
-        data: {
-            user: 'adonk'
-        }
-    });
+    try {
+        res.status(200).json({
+            status: 'success',
+            data: {
+                user: 'adonk'
+            }
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 });
 
 //delete user
 app.delete('/api/v1/users/:id', (req , res) => {
-    res.status(204).json({
-        status: 'success'
-    });
+    try {
+        res.status(204).json({
+            status: 'success'
+        });
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 });
 
 const port = process.env.PORT || 3001;

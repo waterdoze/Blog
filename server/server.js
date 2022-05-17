@@ -49,18 +49,18 @@ app.get('/api/v1/users/:id', async (req, res) => {
 });
 
 //Create user
-app.post('/api/v1/users', (req, res) => {
+app.post('/api/v1/users', async (req, res) => {
     try {
 
-        const result = db.query(
-            'INSERT INTO users (name, cake_day, karma, country) values ($1, $2, $3, $4)',
-             [req.body.name, req.body.cake_day, req.body.karma, req.body.country]
+        const result = await db.query(
+            'INSERT INTO users (name, cake_day, karma, country) VALUES ($1, $2, $3, $4) RETURNING *',
+            [req.body.name, req.body.cake_day, req.body.karma, req.body.country]
         );
-        
+
         res.status(201).json({
             status: 'success',
             data: {
-                user: 'adonk'
+                user: result.rows
             }
         });
     }
@@ -71,12 +71,18 @@ app.post('/api/v1/users', (req, res) => {
 });
 
 //Update user
-app.put('/api/v1/users/:id', (req, res) => {
+app.put('/api/v1/users/:id', async (req, res) => {
     try {
+
+        const result = await db.query(
+            'UPDATE users SET name = $1, cake_day = $2, karma = $3, country = $4 WHERE id = $5 RETURNING *',
+            [req.body.name, req.body.cake_day, req.body.karma, req.body.country, req.params.id]
+        );
+
         res.status(200).json({
             status: 'success',
             data: {
-                user: 'adonk'
+                user: result.rows
             }
         });
     }
@@ -87,10 +93,13 @@ app.put('/api/v1/users/:id', (req, res) => {
 });
 
 //delete user
-app.delete('/api/v1/users/:id', (req , res) => {
+app.delete('/api/v1/users/:id', async (req , res) => {
     try {
+
+        const result = await db.query('DELETE FROM users WHERE id = $1', [req.params.id]);
+
         res.status(204).json({
-            status: 'success'
+            status: 'success',
         });
     }
     catch (err) {

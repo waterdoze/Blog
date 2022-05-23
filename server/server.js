@@ -2,8 +2,10 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const db = require('./db');
 
+app.use(cors());
 app.use(express.json())
 
 //Get all users

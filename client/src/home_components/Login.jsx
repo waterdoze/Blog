@@ -1,23 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Reddle from "../apis/Reddle";
+import { LoginContext } from "../context/LoginContext";
 
-const Login = () => {
+const Login = (props) => {
 
-    useEffect(() => {
+    // const {users, setUsers} = useContext(LoginContext);
 
-        const fetchData = async () => {
-            try {
-                const response = await Reddle.get("/");
-                console.log(response);
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
+    // useEffect(() => {
+        
+    //     const fetchData = async () => {
+    //         try {
+    //             const response = await Reddle.get("/");
+    //             setUsers(response.data.data.users);
+    //             console.log(response);
+    //         }
+    //         catch (err) {
+    //             console.log(err);
+    //         }
+    //     }
 
-        fetchData();
-    }, [])
+    //     fetchData();
+    // }, [])
 
+    const [name, setName] = useState("");
+    const [passWord, setPassword] = useState("");
 
     return (
         <div>
@@ -28,7 +34,7 @@ const Login = () => {
             <form className="shadow w-25 m-auto mt-5 p-3 border">
                 <div className="form-group mb-3">
                     <label htmlFor="inputUsername">Username</label>
-                    <input type="username" className="form-control" id="inputEmail" placeholder="Enter Username"/>
+                    <input value={name} onChange={(e) => setName(e.target.value)}type="username" className="form-control" id="inputEmail" placeholder="Enter Username"/>
                 </div>
                 <div className="form-group">
                     <label htmlFor="inputPassword">Password</label>

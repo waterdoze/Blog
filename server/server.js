@@ -55,8 +55,8 @@ app.post('/api/v1/users', async (req, res) => {
     try {
 
         const result = await db.query(
-            'INSERT INTO users (name, cake_day, karma, country) VALUES ($1, $2, $3, $4) RETURNING *',
-            [req.body.name, req.body.cake_day, req.body.karma, req.body.country]
+            'INSERT INTO users (name, cake_day, karma, country, password) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+            [req.body.name, req.body.cake_day, req.body.karma, req.body.country, req.body.password]
         );
 
         res.status(201).json({

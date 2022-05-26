@@ -8,7 +8,6 @@ const Register = (props) => {
     // const {users, setUsers} = useContext(LoginContext);
 
     // useEffect(() => {
-        
     //     const fetchData = async () => {
     //         try {
     //             const response = await Reddle.get("/");
@@ -23,29 +22,35 @@ const Register = (props) => {
     //     fetchData();
     // }, [])
 
+
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
 
     let navigate = useNavigate();
-    const handleSubmit = (id) => {
-        navigate(`/users/${id}/update`);
-        e.preventDefault();
-        const today = new Date();
 
-        try {
-            const response = await Reddle.post("/", {
-                name: name,
-                cake_day: "" + (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear(),
-                karma: 0,
-                country: "",
-                password: password
-            });
+    const handleSubmit = () => {
+        navigate(`/1/`);
+        // e.preventDefault();
+        // const today = new Date();
 
-            console.log(response);
-        }
-        catch (err) {
+        // try {
+        //     const response = await Reddle.post("/", {
+        //         name: name,
+        //         cake_day: "" + (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear(),
+        //         karma: 0,
+        //         country: "",
+        //         password: password
+        //     });
 
-        }
+        //     console.log(response);
+        // }
+        // catch (err) {
+
+        // }
+    }
+
+    const handleLogin = async () => {
+        await navigate("/login");
     }
 
     return (
@@ -64,11 +69,11 @@ const Register = (props) => {
                     <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="inputPassword" placeholder="Password"/>
                 </div>
 
-                <button type="register" className="btn btn-link mb-3">Already Have an Account? Login Here</button>
+                <button onClick={() => handleLogin()}type="register" className="btn btn-link mb-3">Already Have an Account? Login Here</button>
 
                 <div className="text-center">
                     
-                    <button onClick={() => handleSubmit(users.id)} type="submit" className="btn btn-primary">Register</button>
+                    <button onClick={() => handleSubmit()} type="submit" className="btn btn-primary">Register</button>
                 </div>
                 
 

@@ -59,7 +59,6 @@ const Login = (props) => {
             else {
                 setErrorMessage("Login Failed");
             }
-            errorReference.current.focus();
         }
     }
 
@@ -72,59 +71,48 @@ const Login = (props) => {
     }
     return (
 
-        <>
-            {success ? (
-                <section className="text-center">
-                    <h1>You're Logged In!</h1>
-                    <br/>
-                    <button className="btn btn-primary" onClick={() => HandleLogin()}>Go Back Home</button>
-                </section>
-            ) : (
-                <section className="">
-                    <div>
-                        <div className='display-1 text-center'>Reddle</div>
-                    </div>
+        <section className="">
+            <div>
+                <div className='display-1 text-center'>Reddle</div>
+            </div>
 
-                    <form className="shadow w-25 m-auto mt-5 p-3 border">
-                        <div className="form-group mb-3">
-                            <label htmlFor="inputUsername">Username</label>
-                            <input 
-                                value={name} 
-                                ref={userReference} 
-                                onChange={(e) => setName(e.target.value)} 
-                                 
-                                type="username" 
-                                className="form-control" 
-                                id="inputEmail" 
-                                placeholder="Enter Username"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="inputPassword">Password</label>
-                            <input 
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                
-                                type="password" 
-                                className="form-control" 
-                                id="inputPassword" 
-                                placeholder="Password"
-                            />
-                        </div>
-
-                        <button onClick={() => HandleRegister()} type="register" className="btn btn-link mb-3">No Account? Register Here</button>
-
-                        <div className="text-center">
+            <form className="shadow w-25 m-auto mt-5 p-3 border">
+                <div className="form-group mb-3">
+                    <label htmlFor="inputUsername">Username</label>
+                    <input 
+                        value={name} 
+                        ref={userReference} 
+                        onChange={(e) => setName(e.target.value)} 
                             
-                            <button onClick={(e) => HandleSubmit(e)} type="submit" className="btn btn-primary">Login</button>
-                        </div>
+                        type="username" 
+                        className="form-control" 
+                        id="inputEmail" 
+                        placeholder="Enter Username"
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="inputPassword">Password</label>
+                    <input 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         
+                        type="password" 
+                        className="form-control" 
+                        id="inputPassword" 
+                        placeholder="Password"
+                    />
+                </div>
 
-                    </form>
-                </section>
-            )}
+                <button onClick={() => HandleRegister()} type="register" className="btn btn-link mb-3">Need an Account?</button>
 
-        </>
+                <div className="text-center">
+                    
+                    <button onClick={(e) => HandleSubmit(e)} type="submit" className="btn btn-primary">Login</button>
+                </div>
+                
+
+            </form>
+        </section>
     )
 }
 

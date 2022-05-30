@@ -14,22 +14,6 @@ const REGISTER_URL = "/";
 
 const Register = (props) => {
 
-    // const {users, setUsers} = useContext(LoginContext);
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await Reddle.get("/");
-    //             setUsers(response.data.data.users);
-    //             console.log(response);
-    //         }
-    //         catch (err) {
-    //             console.log(err);
-    //         }
-    //     }
-
-    //     fetchData();
-    // }, [])
     const userReference = useRef();
     const errorReference = useRef();
 
@@ -46,7 +30,6 @@ const Register = (props) => {
     const [matchFocus, setMatchFocus] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState("");
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userReference.current.focus();
@@ -54,19 +37,14 @@ const Register = (props) => {
 
     useEffect(() => {
         const result = USER_REGEX.test(name);
-        console.log(result);
-        console.log(name);
         setValidName(result);
     }, [name]);
 
     useEffect(() => {
         const result = PASSWORD_REGEX.test(password);
-        console.log(result);
-        console.log(password);
 
         setValidPassword(result);
         const match = password == matchPassword;
-        console.log("match is " + match);
 
         setValidMatch(match);
     }, [password, matchPassword]);
@@ -78,11 +56,16 @@ const Register = (props) => {
     let navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-
-        navigate(`/1/`);
-
         e.preventDefault();
         const today = new Date();
+
+        const v1 = USER_REGEX.test(name);
+        const v2 = PASSWORD_REGEX.test(password);
+
+        if (!v1 || !v2) {
+            setErrorMessage("Invalid Entry");
+            return;
+        }
 
         try {
             const response = await Reddle.post(REGISTER_URL, {
@@ -98,10 +81,15 @@ const Register = (props) => {
         catch (err) {
 
         }
+
+        navigate("main");
     }
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        console.log("joe")
         await navigate("/login");
+        console.log("yep")
     }
 
     const backgroundColor = {
@@ -213,7 +201,7 @@ const Register = (props) => {
                 </div>
                 
                 <div className="text-left">
-                    <button onClick={() => handleLogin()}type="register" className="btn btn-link mb-3 ">Login Here</button>
+                    <button onClick={(e) => handleLogin(e)}type="register" className="btn btn-link mb-3 ">Login Here</button>
                 </div>
 
                 <div className="text-center">

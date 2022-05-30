@@ -1,6 +1,5 @@
 import React, {useState, createContext} from "react";
 
-
 export const LoginContext = createContext();
 
 export const LoginContextProvider = (props) => {
@@ -14,4 +13,4 @@ export const LoginContextProvider = (props) => {
     );
 };
 
-
+    

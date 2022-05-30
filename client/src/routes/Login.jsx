@@ -69,16 +69,26 @@ const Login = (props) => {
     const HandleRegister = () => {
         navigate("/");
     }
+
+    const backgroundColor = {
+        backgroundColor: "rgba(255, 86, 0, 1)",
+        height: "100vh"
+    }
+
+    const bigText = {
+        fontSize: "160px",
+    }
+
     return (
 
-        <section className="">
+        <section style={backgroundColor}>
             <div>
-                <div className='display-1 text-center'>Reddle</div>
+                <div className='display-1 text-center text-white text' style={bigText}>Reddle</div>
             </div>
 
-            <form className="shadow w-25 m-auto mt-5 p-3 border">
+            <form className="shadow-lg w-25 m-auto mt-5 p-3 bg-light card">
                 <div className="form-group mb-3">
-                    <label htmlFor="inputUsername">Username</label>
+                    <label htmlFor="inputUsername">Username:</label>
                     <input 
                         value={name} 
                         ref={userReference} 
@@ -91,7 +101,7 @@ const Login = (props) => {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="inputPassword">Password</label>
+                    <label htmlFor="inputPassword">Password:</label>
                     <input 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -103,11 +113,12 @@ const Login = (props) => {
                     />
                 </div>
 
-                <button onClick={() => HandleRegister()} type="register" className="btn btn-link mb-3">Need an Account?</button>
-
+                <div className="text-left">
+                    <button onClick={() => HandleRegister()} type="register" className="btn btn-link mb-3">Need an Account?</button>
+                </div>
                 <div className="text-center">
                     
-                    <button onClick={(e) => HandleSubmit(e)} type="submit" className="btn btn-primary">Login</button>
+                    <button onClick={(e) => HandleSubmit(e)} type="submit" className="btn btn-primary btn-lg">Login</button>
                 </div>
                 
 

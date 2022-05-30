@@ -50,7 +50,7 @@ app.get('/api/v1/users/:id', async (req, res) => {
     
 });
 
-//Create user
+//Create user (registering)
 app.post('/api/v1/users', async (req, res) => {
     try {
 

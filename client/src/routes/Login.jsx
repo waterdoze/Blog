@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Reddle from "../apis/Reddle";
-import { LoginContext } from "../context/LoginContext";
+import useAuth from "../hooks/useAuth";
 
 const LOGIN_URL = "";
 
@@ -10,9 +9,8 @@ const Login = (props) => {
 
     let navigate = useNavigate();
 
-    const { setAuth } = useContext(LoginContext); 
+    const { setAuth } = useAuth();
     const userReference = useRef();
-    const errorReference = useRef();
 
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -50,10 +48,10 @@ const Login = (props) => {
             if (!err?.response) {
                 setErrorMessage("No Server Response");
             }
-            else if (err.response?.status == 400) {
+            else if (err.response?.status === 400) {
                 setErrorMessage("Missing Username or Password");
             }
-            else if (err.response?.status == 401) {
+            else if (err.response?.status === 401) {
                 setErrorMessage("Unauthorized");
             }
             else {

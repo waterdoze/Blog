@@ -82,14 +82,14 @@ const Register = (props) => {
 
         }
 
-        navigate("main");
+        navigate("../main");
     }
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log("joe")
-        await navigate("/login");
-        console.log("yep")
+        console.log(window.location.pathname)
+        await navigate("../login");
+        console.log(window.location.pathname)
     }
 
     const backgroundColor = {

@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const path = require('path')
 const express = require('express');
 const app = express();
 const cors = require('cors');
@@ -7,6 +8,9 @@ const db = require('./db');
 
 app.use(cors());
 app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+app.use('/api/v1/users', require('./routes/register'))
 
 //Get all users
 app.get('/api/v1/users', async (req, res) => {
@@ -22,6 +26,7 @@ app.get('/api/v1/users', async (req, res) => {
             }
         });
     }
+
     catch(err) {
         console.log(err);
     }
@@ -48,28 +53,6 @@ app.get('/api/v1/users/:id', async (req, res) => {
         console.log(err);
     }
     
-});
-
-//Create user (registering)
-app.post('/api/v1/users', async (req, res) => {
-    try {
-
-        const result = await db.query(
-            'INSERT INTO users (name, cake_day, karma, country, password) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [req.body.name, req.body.cake_day, req.body.karma, req.body.country, req.body.password]
-        );
-
-        res.status(201).json({
-            status: 'success',
-            data: {
-                user: result.rows
-            }
-        });
-    }
-    catch (err) {
-        console.log(err);
-    }
-
 });
 
 //Update user
@@ -112,5 +95,5 @@ app.delete('/api/v1/users/:id', async (req , res) => {
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
-    console.log(`server is up and listening on port ${port}`);
+    console.log(`server is running on port ${port}`);
 })

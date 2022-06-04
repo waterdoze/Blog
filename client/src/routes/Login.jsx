@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const LOGIN_URL = "";
@@ -8,7 +8,9 @@ const LOGIN_URL = "";
 const Login = (props) => {
 
     let navigate = useNavigate();
-
+    const location = useLocation();
+    const from = location.state?.from?.pathname || "/";
+        
     const { setAuth } = useAuth();
     const userReference = useRef();
 
@@ -43,6 +45,8 @@ const Login = (props) => {
             setAuth({ name, password, roles, accessToken });
             setName("");
             setPassword("");
+
+            navigate(from, { replace: true });
         }
         catch (err) {
             if (!err?.response) {
@@ -65,7 +69,7 @@ const Login = (props) => {
     }
 
     const HandleRegister = () => {
-        navigate("/");
+        navigate("/register");
     }
 
     const backgroundColor = {

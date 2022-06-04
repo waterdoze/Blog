@@ -87,9 +87,9 @@ const Register = (props) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log(window.location.pathname)
-        await navigate("../login");
-        console.log(window.location.pathname)
+        const result = await Reddle.get('/');
+        console.log(result);
+        // await navigate("../login");
     }
 
     const backgroundColor = {

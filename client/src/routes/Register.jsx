@@ -10,7 +10,7 @@ import { LoginContext } from "../context/LoginContext";
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[`~!@#$%^&*()-=_+<>?,./{}|";']).{8,24}$/
 
-const REGISTER_URL = "/";
+const REGISTER_URL = "/register";
 
 const Register = (props) => {
 
@@ -87,9 +87,7 @@ const Register = (props) => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const result = await Reddle.get('/');
-        console.log(result);
-        // await navigate("../login");
+        await navigate("../login");
     }
 
     const backgroundColor = {

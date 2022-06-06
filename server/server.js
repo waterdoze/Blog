@@ -7,11 +7,11 @@ const cors = require('cors');
 const db = require('./db');
 
 app.use(cors());
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/v1/users', require('./routes/register'))
-
+app.use('/api/v1/users/register', require('./routes/register'));
+app.use('/api/v1/users/login', require('./routes/login'));
 //Get all users
 app.get('/api/v1/users', async (req, res) => {
 

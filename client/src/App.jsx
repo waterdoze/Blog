@@ -24,12 +24,12 @@ const App = () => {
                             <Route path="login" element={<Login/>}/>
                             <Route path="unauthorized" element={<Unauthorized/>}/>
                             <Route path="linkpage" element={<LinkPage/>}/>
-
+                            <Route path="main" element={<MainPage/>}/>
                             {/*protected routes*/}
                             <Route element={<RequireAuth/>}>
                                 <Route path="/" element={<Home/>}/>
                                 <Route path=":id/update" element={<UserUpdatePage/>}/>
-                                <Route path="main" element={<MainPage/>}/>
+                                
                             </Route>
 
                             <Route path="*" element={<Missing/>}/>

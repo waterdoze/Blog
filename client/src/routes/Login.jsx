@@ -1,9 +1,9 @@
-import axios from "axios";
+import Reddle from "../apis/Reddle";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-const LOGIN_URL = "";
+const LOGIN_URL = "/login";
 
 const Login = (props) => {
 
@@ -30,37 +30,26 @@ const Login = (props) => {
     const HandleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(
-                LOGIN_URL, 
-                JSON.stringify({name, password}),
-                {
-                    headers: { "Content-Type": "application/json" },
-                    withCredentials: true
+            const response = await Reddle.post(
+                LOGIN_URL, {
+                    name: name, 
+                    password: password
                 }
             );
 
-            const accessToken = response?.data?.accessToken;
-            const roles = response?.data?.roles;
+            // const accessToken = response?.data?.accessToken;
+            // const roles = response?.data?.roles;
             
-            setAuth({ name, password, roles, accessToken });
-            setName("");
-            setPassword("");
+            // setAuth({ name, password, roles, accessToken });
+            // setName("");
+            // setPassword("");
 
-            navigate(from, { replace: true });
+            // navigate(from, { replace: true });
+            console.log(response);
+            // navigate('../main');
         }
         catch (err) {
-            if (!err?.response) {
-                setErrorMessage("No Server Response");
-            }
-            else if (err.response?.status === 400) {
-                setErrorMessage("Missing Username or Password");
-            }
-            else if (err.response?.status === 401) {
-                setErrorMessage("Unauthorized");
-            }
-            else {
-                setErrorMessage("Login Failed");
-            }
+            
         }
     }
 

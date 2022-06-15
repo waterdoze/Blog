@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Reddle from "../apis/Reddle";
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../context/LoginContext";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[`~!@#$%^&*()-=_+<>?,./{}|";']).{8,24}$/

@@ -6,14 +6,18 @@ const ALL_POSTS_URL = "/posts";
 
 const MainPage = () => {
 
-    useEffect(async () => {
-        try {
-            const response = await Reddle.get(ALL_POSTS_URL)
-            console.log(response);
+    useEffect(() => {
+        
+        const fetchPosts = async () => {
+            try {
+                const response = await Reddle.get(ALL_POSTS_URL)
+                console.log(response);
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
-        catch (err) {
-            console.log(err);
-        }
+
     },[])
 
     return (

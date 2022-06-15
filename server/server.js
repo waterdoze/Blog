@@ -1,19 +1,21 @@
 require('dotenv').config();
 
-const path = require('path')
 const express = require('express');
 const app = express();
 const cors = require('cors');
 const db = require('./db');
+const verifyJWT = require('./middleware/verifyJWT');
+const cookieParser = require('cookie-parser');
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use('/api/v1/users/register', require('./routes/register'));
 app.use('/api/v1/users/login', require('./routes/login'));
 //Get all users
-app.get('/api/v1/users', async (req, res) => {
+app.get('/api/v1/users', verifyJWT, async (req, res) => {
 
     try {
         const result = await db.query('SELECT * FROM users');

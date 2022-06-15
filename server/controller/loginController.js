@@ -21,10 +21,21 @@ const handleLogin = async (req, res) => {
     const match = await bcrypt.compare(password, foundUser.password);
     if (match) {
 
-        // const accessToken = jwt.sign()
-        res.json({
-            success: `${name} is logged in!`
-        });
+        const accessToken = jwt.sign(
+            { "username": foundUser.name }, 
+            process.env.ACCESS_TOKEN_SECRET,
+            { expiresIn: "5m" }
+        );
+
+        const refreshToken = jwt.sign(
+            { "username": foundUser.name }, 
+            process.env.REFRESH_TOKEN_SECRET,
+            { expiresIn: "1d" }
+        );
+        
+        db.query('UPDATE users SET token = $1 WHERE name = $2', [refreshToken, name]);
+        res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.json({ accessToken });
     }
     else {
         return res.sendStatus(401);

@@ -22,18 +22,18 @@ const handleLogin = async (req, res) => {
     if (match) {
 
         const accessToken = jwt.sign(
-            { "username": foundUser.name }, 
+            { "name": foundUser.name }, 
             process.env.ACCESS_TOKEN_SECRET,
             { expiresIn: "5m" }
         );
 
         const refreshToken = jwt.sign(
-            { "username": foundUser.name }, 
+            { "name": foundUser.name }, 
             process.env.REFRESH_TOKEN_SECRET,
             { expiresIn: "1d" }
         );
         
-        db.query('UPDATE users SET token = $1 WHERE name = $2', [refreshToken, name]);
+        await db.query('UPDATE users SET token = $1 WHERE name = $2', [refreshToken, name]);
         res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ accessToken });
     }

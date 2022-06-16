@@ -14,6 +14,8 @@ app.use(cookieParser());
 
 app.use('/api/v1/users/register', require('./routes/register'));
 app.use('/api/v1/users/login', require('./routes/login'));
+app.use('/api/v1/users/logout', require('./routes/logout'));
+app.use('/api/v1/users/refresh', require('./routes/refresh'));
 //Get all users
 app.get('/api/v1/users', verifyJWT, async (req, res) => {
 

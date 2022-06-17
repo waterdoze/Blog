@@ -12,14 +12,14 @@ const handleLogout = async (req, res) => {
     const foundUser = (await db.query('SELECT * FROM users WHERE token = $1', [refreshToken])).rows[0];
     
     if (!foundUser) {
-        res.clearCookie('jwt', { httpOnly: true });
+        res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
         return res.sendStatus(204); //No Content
     };
 
     //Delete refreshToken in db
 
     await db.query('UPDATE users SET token = null WHERE token = $1', [refreshToken]);
-    res.clearCookie('jwt', { httpOnly: true }); //secure: true - only serves on https
+    res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true }); //secure: true - only serves on https
     res.sendStatus(204);
 }
 

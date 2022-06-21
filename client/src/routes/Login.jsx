@@ -1,5 +1,5 @@
 import Reddle from "../apis/Reddle";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
@@ -9,7 +9,7 @@ const Login = (props) => {
 
     let navigate = useNavigate();
     const location = useLocation();
-    const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/main";
         
     const { setAuth } = useAuth();
     const userReference = useRef();
@@ -17,7 +17,6 @@ const Login = (props) => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         userReference.current.focus();
@@ -30,6 +29,7 @@ const Login = (props) => {
     const HandleSubmit = async (e) => {
         e.preventDefault();
         try {
+            
             const response = await Reddle.post(
                 LOGIN_URL, {
                     name: name, 
@@ -37,27 +37,22 @@ const Login = (props) => {
                 }
             );
 
-            // const accessToken = response?.data?.accessToken;
-            // const roles = response?.data?.roles;
+            const accessToken = response?.data?.accessToken;
             
-            // setAuth({ name, password, roles, accessToken });
-            // setName("");
-            // setPassword("");
+            setAuth({ name, password, accessToken });
+            setName("");
+            setPassword("");
 
             // navigate(from, { replace: true });
-            console.log(response);
-            // navigate('../main');
+            navigate('../main');
         }
         catch (err) {
             
         }
     }
 
-    const HandleLogin = () => {
-        setSuccess(false);
-    }
-
-    const HandleRegister = () => {
+    const HandleRegister = (e) => {
+        e.preventDefault();
         navigate("/register");
     }
 
@@ -77,7 +72,7 @@ const Login = (props) => {
                 <div className='display-1 text-center text-white text' style={bigText}>Reddle</div>
             </div>
 
-            <form className="shadow-lg w-25 m-auto mt-5 p-3 bg-light card">
+            <form className="shadow-lg w-25 m-auto mt-5 p-3 bg-light card" onSubmit={HandleSubmit}>
                 <div className="form-group mb-3">
                     <label htmlFor="inputUsername">Username:</label>
                     <input 
@@ -96,7 +91,6 @@ const Login = (props) => {
                     <input 
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        
                         type="password" 
                         className="form-control" 
                         id="inputPassword" 
@@ -105,11 +99,11 @@ const Login = (props) => {
                 </div>
 
                 <div className="text-left">
-                    <button onClick={() => HandleRegister()} type="register" className="btn btn-link mb-3">Need an Account?</button>
+                    <button onClick={HandleRegister} type="register" className="btn btn-link mb-3">Need an Account?</button>
                 </div>
                 <div className="text-center">
                     
-                    <button onClick={(e) => HandleSubmit(e)} type="submit" className="btn btn-primary btn-lg">Login</button>
+                    <button onClick={HandleSubmit} type="submit" className="btn btn-primary btn-lg">Login</button>
                 </div>
                 
 

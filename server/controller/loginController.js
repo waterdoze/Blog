@@ -34,7 +34,7 @@ const handleLogin = async (req, res) => {
         );
         
         await db.query('UPDATE users SET token = $1 WHERE name = $2', [refreshToken, name]);
-        res.cookie("jwt", refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+        res.cookie("jwt", refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 });
         res.json({ accessToken });
     }
     else {

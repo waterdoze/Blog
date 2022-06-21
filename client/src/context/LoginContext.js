@@ -4,10 +4,10 @@ export const LoginContext = createContext();
 
 export const LoginContextProvider = (props) => {
 
-    const [users, setUsers] = useState([])
+    const [auth, setAuth] = useState([])
 
     return (
-        <LoginContext.Provider value={{ users, setUsers }}>
+        <LoginContext.Provider value={{ auth, setAuth }}>
             {props.children}
         </LoginContext.Provider>
     );

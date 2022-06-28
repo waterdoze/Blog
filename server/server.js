@@ -21,8 +21,10 @@ app.use('/api/v1/users/login', require('./routes/login'));
 app.use('/api/v1/users/logout', require('./routes/logout'));
 app.use('/api/v1/users/refresh', require('./routes/refresh'));
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 app.use('/api/v1/users/posts', require('./routes/posts'));
+app.use('/api/v1/users/post', require('./routes/post'));
+app.use('/api/v1/users/likes', require('./routes/likes'));
 //Get all users
 app.get('/api/v1/users', async (req, res) => {
 

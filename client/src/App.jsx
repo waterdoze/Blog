@@ -9,9 +9,9 @@ import MainPage from "./routes/MainPage";
 import Layout from "./routes/Layout";
 import Unauthorized from "./routes/Unauthorized";
 import LinkPage from "./routes/LinkPage";
-import Home from "./routes/Home";
 import Missing from "./routes/Missing";
 import RequireAuth from "./routes/RequireAuth";
+import PostPage from "./routes/PostPage";
 
 
 const App = () => {
@@ -27,13 +27,11 @@ const App = () => {
                                 <Route path="login" element={<Login/>}/>
                                 <Route path="unauthorized" element={<Unauthorized/>}/>
                                 <Route path="linkpage" element={<LinkPage/>}/>
+
                                 <Route path="main" element={<MainPage/>}/>
-                                {/*protected routes*/}
-                                <Route element={<RequireAuth/>}>
-                                    <Route path="/" element={<Home/>}/>
-                                    <Route path=":id/update" element={<UserUpdatePage/>}/>
+                                <Route path="posts/:id" element={<PostPage/>}/>
+                                <Route path=":id/update" element={<UserUpdatePage/>}/>
                                     
-                                </Route>
 
                                 <Route path="*" element={<Missing/>}/>
                             </Route>

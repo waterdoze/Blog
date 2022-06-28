@@ -1,15 +1,15 @@
 import React from "react";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import Reddle from "../apis/Reddle";
-import { PostContext } from "../context/PostContext";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import usePost from "../hooks/usePost";
 
 const ALL_POSTS_URL = "/posts";
 
 const MainPage = () => {
     
-    const { posts, setPosts } = useContext(PostContext);
+    const { posts, setPosts } = usePost();
     const { auth } = useAuth();
     let navigate = useNavigate();
 
@@ -17,7 +17,14 @@ const MainPage = () => {
         navigate(`/posts/${id}`);
     }
 
+    const HandleNewPost = (e) => {
+        e.preventDefault();
+        console.log('yay')
+    }
+
     useEffect(() => {
+
+
         
         const fetchPosts = async () => {
             try {
@@ -51,18 +58,20 @@ const MainPage = () => {
                             <th scope="col">Title</th>
                             <th scope="col">Upvotes</th>
                             <th scope="col">Downvotes</th>
-                            <th scope="col"></th>
+                            <th scope="col">
+                                <button onClick={HandleNewPost} type="newPost" className="btn btn-primary">Create Post</button>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         {posts.map(post => {
                             return (
-                                <tr>
+                                <tr className='align-middle' key={post.pid}>
                                     <td>{post.title}</td>
-                                    <td>{post['upvotes']}</td>
-                                    <td>{post['downvotes']}</td>
+                                    <td>{post.upvotes}</td>
+                                    <td>{post.downvotes}</td>
                                     <td>
-                                        <button onClick={() => HandlePost(post.id)} type="button" className="btn btn-warning btn-lg">Open</button>
+                                        <button onClick={() => HandlePost(post.pid)} type="button" className="btn btn-warning btn-lg">Open</button>
                                     </td>
                                 </tr>
                             );

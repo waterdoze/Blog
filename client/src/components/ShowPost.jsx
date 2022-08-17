@@ -1,9 +1,8 @@
 import React from "react";
 import Reddle from "../apis/Reddle";
-import { TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle }from "@mui/material";
+import { TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, CardContent }from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import useProfile from "../context/useProfile";
 
 
 const ShowPost = (props) => {
@@ -12,7 +11,6 @@ const ShowPost = (props) => {
 
     const location = useLocation();
     const post = location.state.post;
-    const { prof } = useProfile();
 
     const [comments, setComments] = useState([])
     const [curComment, setCurComment] = useState({
@@ -108,19 +106,31 @@ const ShowPost = (props) => {
     <div >
         <div>
             <h2>Post</h2>
-                <h4>{post.title}</h4>
-                <p>{post.post}</p>
-                <small> ~ {post.author}</small>
+                <Card style={{margin: '15px', boxShadow: '5px 10px 5px #888888'}}>
+                    <CardContent >
+                        <h4>{post.title}</h4>
+                        <p>{post.post}</p>
+                        <small> ~ {post.author}</small>
+                    </CardContent>
+                </Card>
+
         </div>
         <div>
             <h2>Comments</h2>
+
                 {comments ? comments.map(comment => 
-                <div key={comment.cid}>
-                    <h3>{comment.comment}</h3>
-                    <small>{comment.date_created}</small>
-                    <p>By: {comment.author}</p>
-                    {comment.user_id == parseInt(window.sessionStorage.getItem("userID")) ? <button className='btn btn-secondary'onClick={() => handleClickComment(comment.cid, comment.comment)}>Edit</button> : null}
-                </div>) : null}
+
+                    <Card key={comment.cid} style={{margin: '15px', boxShadow: '5px 10px 5px #888888'}}>
+                        <CardContent>
+                            <div key={comment.cid}>
+                                <h3>{comment.comment}</h3>
+                                <small>{comment.date_created}</small>
+                                <p>By: {comment.author}</p>
+                                {comment.user_id == parseInt(window.sessionStorage.getItem("userID")) ? <button className='btn btn-secondary'onClick={() => handleClickComment(comment.cid, comment.comment)}>Edit</button> : null}
+                            </div>
+                        </CardContent>
+                    </Card>)
+                : null}
         </div>
         <div>
             <form onSubmit={handleSubmit}>

@@ -4,12 +4,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate, Link } from "react-router-dom";
 
 import { Card, Paper, CardContent, CardHeader, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
+import useProfile from "../context/useProfile";
 
 
 const Profile = () => {
 
     let navigate = useNavigate();
 
+    const { setProf } = useProfile();
     const { user, isAuthenticated } = useAuth0();
     const [posts, setPosts] = useState([]);
     const [stateLocal, setState] = useState({ 
@@ -18,6 +20,33 @@ const Profile = () => {
     })
 
     useEffect(() => {
+        const insertDB = async () => {
+            try {
+
+                const theName = user.name
+                const theEmail = user.email
+                const theEmail_Verified = user.email_verified
+
+                await Reddle.post("/users", {
+                    email: theEmail,
+                    email_verified: theEmail_Verified,
+                    name: theName,
+                });
+                
+                const result2 = await Reddle.get(`/users/otherprofile?name=${theName}`);
+                setProf(result2.data.data.user);
+
+                window.sessionStorage.setItem("userID", result2.data.data.user[0].id)  
+                window.sessionStorage.setItem("userName", result2.data.data.user[0].name)  
+                
+                console.log(window.sessionStorage.getItem("userName")) 
+                console.log(window.sessionStorage.getItem("userID"))
+            } catch (err) {
+                console.log("asdgasge");
+            }
+        };
+
+        insertDB();
         const getPosts = async () => {
             try {
                 const result = await Reddle.get(`/users/allposts?user_id=${window.sessionStorage.getItem("userID")}`);
@@ -65,6 +94,9 @@ const Profile = () => {
         navigate("../addpost");
     };
 
+    const toMainForum = () => {
+        navigate("../mainforum");
+    }
     return (
         <div>
             <div className="text-center">
@@ -141,6 +173,9 @@ const Profile = () => {
                 </button>
                 <button className="btn btn-primary" onClick={() => toAddPost()}>
                     Add Post
+                </button>
+                <button className="btn btn-primary" onClick={() => toMainForum()}>
+                    Main Forum
                 </button>
             </div>
         </div>

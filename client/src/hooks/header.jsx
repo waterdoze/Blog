@@ -14,7 +14,8 @@ const Header = () => {
     };
 
     return (
-        <div className="text-right">
+        <div className="d-flex flex-row-reverse mb-2">
+
             {!isAuthenticated ? (
                 <button
                     className="btn btn-primary"
@@ -30,6 +31,13 @@ const Header = () => {
                     Logout
                 </button>
             )}
+
+            <Link to='/profile' style={{padding: '5px'}}>
+                Profile
+            </Link>
+            <Link to='/mainforum' style={{padding: '5px'}}>
+                Forum
+            </Link>
         </div>
     );
 };
